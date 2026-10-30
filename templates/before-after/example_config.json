@@ -1,0 +1,48 @@
+{
+  "_comment": "Structure A (Reveal first) built from the 10 Oct session photos. Swap the files, anchors and text for a new patient. Times are seconds.",
+  "media_dir": "/mnt/project-files",
+  "output": "/mnt/project-files/templates/before-after/samples/structure-A-reveal-first.mp4",
+  "fps": 30,
+  "font": "reels/fonts/NimbusSansNarrow-Bold.otf",
+  "sfx": true,
+  "music": null,
+  "grade": {"contrast": 1.04, "saturation": 1.02},
+  "text_style": {"style": "box", "size": 78},
+
+  "assets": {
+    "before_R": {"src": "IMG_3163.jpeg", "anchors": [[1330, 1544], [1576, 1644]], "focus": [1430, 1700], "scale": 0.72, "frame_pos": [0.5, 0.47]},
+    "after_R":  {"src": "IMG_3235.jpeg", "anchors": [[1020, 1770], [1320, 1910]], "align_to": "before_R"},
+    "before_L": {"src": "IMG_3167.jpeg", "anchors": [[750, 1580], [516, 1670]], "focus": [700, 1720], "scale": 0.72, "frame_pos": [0.5, 0.47]},
+    "after_L":  {"src": "IMG_3229.jpeg", "anchors": [[680, 1870], [396, 2010]], "align_to": "before_L"}
+  },
+
+  "segments": [
+    {"type": "still", "asset": "after_R", "dur": 1.6, "zoom": [1.35, 1.5], "center": [0.42, 0.55], "hit": true,
+     "text": [{"text": "What session 1 REALLY looks like", "pos": "top", "size": 84}]},
+
+    {"type": "flash", "assets": ["before_R", "after_R"], "dur": 0.9, "every": 0.15, "zoom": 1.15, "center": [0.45, 0.52],
+     "text": [{"text": "same face. 1 hour apart.", "pos": "top", "anim": "none"}]},
+
+    {"type": "still", "asset": "before_R", "dur": 2.0, "zoom": [1.0, 1.08], "center": [0.48, 0.5],
+     "text": [{"text": "BEFORE · 7:02 PM", "pos": "top", "style": "label", "size": 58}]},
+
+    {"type": "wipe", "from": "before_R", "to": "after_R", "dur": 2.2, "direction": "lr", "hold": 0.2, "zoom": [1.0, 1.12], "center": [0.46, 0.52],
+     "text": [{"text": "BEFORE · 7:02 PM", "pos": "top", "style": "label", "size": 58, "end": 1.0, "anim": "none"},
+              {"text": "AFTER SESSION 1 · 8:09 PM", "pos": "top", "style": "label", "size": 58, "start": 1.0}]},
+
+    {"type": "split", "assets": ["before_L", "after_L"], "layout": "stack", "dur": 2.4, "zooms": [1.25, 1.25], "centers": [[0.5, 0.5], [0.5, 0.5]], "hit": true,
+     "text": [{"text": "BEFORE ▲", "y": 860, "style": "label", "size": 54},
+              {"text": "▼ STRAIGHT AFTER", "y": 1060, "style": "label", "size": 54}]},
+
+    {"type": "slider", "from": "before_L", "to": "after_L", "dur": 2.4, "sweeps": 1, "zoom": 1.55, "center": [0.5, 0.52],
+     "text": [{"text": "Now look at the texture", "pos": "top"}]},
+
+    {"type": "still", "asset": "after_L", "dur": 1.6, "zoom": [1.2, 1.3], "center": [0.5, 0.5],
+     "text": [{"text": "Yes, it's red. This is day 1.", "pos": "top"}]},
+
+    {"type": "card", "asset": "after_L", "dur": 2.2, "blur": 26, "dim": 0.5, "zoom": 1.0,
+     "text": [{"text": "Part 1 of her journey", "pos": "upper", "style": "outline", "size": 96},
+              {"text": "Follow for session 2", "pos": "center", "style": "box", "size": 80, "start": 0.4},
+              {"text": "Book your consultation · link in bio", "pos": "lower", "style": "label", "size": 52, "start": 0.8}]}
+  ]
+}
