@@ -1,7 +1,8 @@
 """Shoulder-barge edit: the player in black gets launched into the distance.
 
 Usage: python3 yeet.py <input.mov> <output.mp4>
-The original audio is copied untouched.
+The original audio is copied untouched; the video slows down at the barge, so it
+runs past the end of the audio.
 """
 import math
 import subprocess
@@ -15,9 +16,12 @@ src, out = sys.argv[1:3]
 FPS = 60
 SW, SH = 1126, 632      # source size (after rotation)
 OW, OH = 1920, 1080     # output size
-IMPACT = 324            # shoulder contact (frame @60fps, 5.40s)
-LAUNCH = 330            # he leaves the ground
-LAND = 360              # reaches the far side -> twinkle
+SRC_IMPACT = 324        # shoulder contact (source frame @60fps, 5.40s)
+SRC_LAUNCH = 330        # he leaves the ground
+RAMP = (316, 328)       # speed ramps from 1x down to SLOW over these output frames
+SLOW = 0.4              # slow-motion speed for the flight
+MI_START, MI_FPS = 5.2, 240   # motion-interpolated source for the slow-mo
+TWINKLE_LEN = 34        # frames of twinkle at the end
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 
 # black-kit player's box per keyframe (source px), interpolated in between
@@ -67,8 +71,35 @@ def read_frames():
 
 
 frames = read_frames()
-N = len(frames)
 plate = np.median(frames[::3], axis=0).astype(np.uint8)  # camera is locked off
+p = subprocess.run(["ffmpeg", "-v", "error", "-ss", str(MI_START), "-i", src, "-vf",
+                    f"fps={FPS},minterpolate=fps={MI_FPS}:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1",
+                    "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], capture_output=True, check=True)
+mi_frames = np.frombuffer(p.stdout, np.uint8).reshape(-1, SH, SW, 3)
+
+# output frame -> source position (in 60fps source frames), with a speed ramp
+T_SRC, pos, g = [], 0.0, 0
+while pos <= len(frames) - 1:
+    T_SRC.append(pos)
+    pos += 1 - (1 - SLOW) * min(max((g - RAMP[0]) / (RAMP[1] - RAMP[0]), 0), 1)
+    g += 1
+N = len(T_SRC)
+
+
+def source_image(sf):
+    if sf == int(sf):
+        return frames[int(sf)]
+    k = int(round((sf / FPS - MI_START) * MI_FPS))
+    return mi_frames[min(max(k, 0), len(mi_frames) - 1)]
+
+
+def out_frame(src_f):
+    return next(g for g, sf in enumerate(T_SRC) if sf >= src_f)
+
+
+IMPACT = out_frame(SRC_IMPACT)
+LAUNCH = out_frame(SRC_LAUNCH)
+LAND = N - TWINKLE_LEN
 
 
 def yellow(img):
@@ -76,8 +107,7 @@ def yellow(img):
     return (g > 140) & (r > 110) & (b < 130) & (g - b > 60)
 
 
-def black_mask(f):
-    img = frames[f]
+def black_mask(img, f):
     x0, y0, x1, y1 = interp(BLACK_KEYS, f).astype(int)
     diff = np.abs(img.astype(np.int16) - plate).max(2) > 26
     m = np.zeros((SH, SW), np.uint8)
@@ -86,13 +116,19 @@ def black_mask(f):
     if f <= 348:
         gx0, gy0, gx1, gy1 = interp(GREEN_KEYS, f).astype(int)
         m[gy0:gy1, gx0:gx1] = 0
+        # bits of him hidden behind the green bib: dark pixels left of the bib
+        ys, xs = np.nonzero(yellow(img)[gy0:gy1, gx0:gx1])
+        if len(xs):
+            left, top = gx0 + np.percentile(xs, 5), gy0 + ys.min()
+            dark = img.max(2) < 95
+            ry0, ry1, rx0, rx1 = int(top) - 30, int(top) + 50, gx0 - 4, int(left) - 1
+            m[ry0:ry1, rx0:rx1] |= (diff & dark)[ry0:ry1, rx0:rx1]
     m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((7, 7)))
     return m
 
 
-def black_shadow(f):
+def black_shadow(img, f):
     """His shadow falls straight down toward the camera, below his feet."""
-    img = frames[f]
     x0, y0, x1, y1 = interp(BLACK_KEYS, f).astype(int)
     darker = (plate.astype(np.int16) - img).sum(2) > 45
     m = np.zeros((SH, SW), np.uint8)
@@ -103,24 +139,24 @@ def black_shadow(f):
     return cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((9, 9)))
 
 
-def green_mask(f):
+def green_mask(img, f):
     gx0, gy0, gx1, gy1 = interp(GREEN_KEYS, f).astype(int)
-    diff = np.abs(frames[f].astype(np.int16) - plate).max(2) > 26
+    diff = np.abs(img.astype(np.int16) - plate).max(2) > 26
     m = np.zeros((SH, SW), np.float32)
     m[gy0:gy1, gx0:gx1] = diff[gy0:gy1, gx0:gx1]
     m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((7, 7)))
     return cv2.GaussianBlur(cv2.dilate(m, np.ones((5, 5))), (7, 7), 0)
 
 
-def remove_black(f):
-    m = cv2.dilate(black_mask(f) | black_shadow(f), np.ones((9, 9))).astype(np.float32)
+def remove_black(img, f):
+    m = cv2.dilate(black_mask(img, f) | black_shadow(img, f), np.ones((9, 9))).astype(np.float32)
     m = cv2.GaussianBlur(m, (9, 9), 0)[..., None]
-    return (frames[f] * (1 - m) + plate * m).astype(np.uint8)
+    return (img * (1 - m) + plate * m).astype(np.uint8)
 
 
 # --- cut the sprite from the cleanest frame -------------------------------
 SP = 342
-sm = black_mask(SP)
+sm = black_mask(frames[SP], SP)
 sm[358:, 1022:] = 0
 n, lab, stats, _ = cv2.connectedComponentsWithStats(sm)
 sm = (lab == 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])).astype(np.uint8)
@@ -193,8 +229,8 @@ rng = np.random.default_rng(7)
 DUST = [(rng.uniform(-30, 30), rng.uniform(-60, 60), rng.uniform(0.7, 1.3)) for _ in range(9)]
 
 
-def dust(canvas, f):
-    t = (f - LAUNCH) / 24
+def dust(canvas, img, sf, f):
+    t = (f - LAUNCH) / 48
     if not 0 <= t <= 1:
         return
     layer = canvas.copy()
@@ -202,8 +238,8 @@ def dust(canvas, f):
         c = (1030 + dx * (1 + 2 * t), 385 + dy * (1 + 0.6 * t) - 30 * t)
         soft_circle(layer, c, (12 + 28 * ease_out(t)) * k, (200, 210, 204), 0.95 * (1 - t) ** 1.2)
     # the puff wraps around the green-bib player but never hides his bib
-    bib = cv2.dilate(yellow(frames[f]).astype(np.float32), np.ones((3, 3)))
-    keep = np.maximum(cv2.GaussianBlur(bib, (5, 5), 0), green_mask(f) * t)[..., None]
+    bib = cv2.dilate(yellow(img).astype(np.float32), np.ones((3, 3)))
+    keep = np.maximum(cv2.GaussianBlur(bib, (5, 5), 0), green_mask(img, sf) * t)[..., None]
     canvas[:] = layer * (1 - keep) + canvas * keep
 
 
@@ -222,7 +258,7 @@ JIT = rng.uniform(0.75, 1.15, 24)
 
 
 def pow_burst(canvas, f):
-    t = (f - IMPACT) / 10
+    t = (f - IMPACT) / 20
     if not 0 <= t <= 1:
         return
     c = (1040, 335)
@@ -251,7 +287,7 @@ def twinkle(canvas, f):
 def camera(f):
     """Zoom factor and centre: push in on the barge, pull out for the flight."""
     zin = ease_in_out((f - 264) / 54)
-    zout = ease_in_out((f - IMPACT - 2) / 22)
+    zout = ease_in_out((f - IMPACT - 4) / 50)
     k = zin * (1 - zout)
     z = 1 + 0.5 * k
     c = np.array([SW / 2, SH / 2]) * (1 - k) + np.array([1000.0, 372.0]) * k
@@ -260,9 +296,9 @@ def camera(f):
 
 def shake(f):
     t = f - IMPACT
-    if not 0 <= t < 14:
+    if not 0 <= t < 22:
         return 0.0, 0.0
-    amp = 9 * (1 - t / 14) ** 2
+    amp = 9 * (1 - t / 22) ** 2
     return amp * math.sin(t * 2.7), amp * math.cos(t * 3.9)
 
 
@@ -304,9 +340,11 @@ enc = subprocess.Popen(
     stdin=subprocess.PIPE)
 
 for f in range(N):
-    canvas = (remove_black(f) if f >= LAUNCH else frames[f]).astype(np.float32)
+    sf = T_SRC[f]
+    img = source_image(sf)
+    canvas = (remove_black(img, sf) if f >= LAUNCH else img).astype(np.float32)
 
-    dust(canvas, f)
+    dust(canvas, img, sf, f)
     if LAUNCH <= f <= LAND:
         u = (f - LAUNCH) / (LAND - LAUNCH)
         speed_trail(canvas, u)
@@ -314,7 +352,7 @@ for f in range(N):
     twinkle(canvas, f)
     pow_burst(canvas, f)
 
-    flash = 0.5 * max(0.0, 1 - (f - IMPACT) / 5) if f >= IMPACT else 0
+    flash = 0.5 * max(0.0, 1 - (f - IMPACT) / 8) if f >= IMPACT else 0
     canvas = canvas + (255 - canvas) * flash
 
     z, c = camera(f)
@@ -330,4 +368,4 @@ for f in range(N):
 
 enc.stdin.close()
 enc.wait()
-print(f"rendered {N} frames")
+print(f"rendered {N} frames, impact {IMPACT}, launch {LAUNCH}, land {LAND}")
