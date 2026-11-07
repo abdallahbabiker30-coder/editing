@@ -19,9 +19,9 @@ OW, OH = 1920, 1080     # output size
 SRC_IMPACT = 324        # shoulder contact (source frame @60fps, 5.40s)
 SRC_LAUNCH = 330        # he leaves the ground
 RAMP = (316, 328)       # speed ramps from 1x down to SLOW over these output frames
-SLOW = 0.4              # slow-motion speed for the flight
+SLOW = 0.25             # slow-motion speed for the flight
 MI_START, MI_FPS = 5.2, 240   # motion-interpolated source for the slow-mo
-TWINKLE_LEN = 34        # frames of twinkle at the end
+TWINKLE_LEN = 45        # frames of twinkle at the end
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 
 # black-kit player's box per keyframe (source px), interpolated in between
@@ -175,7 +175,7 @@ P2 = np.array([430.0, 74.0])     # far side of the pitch
 
 def flight(u):
     """Position, scale, angle for flight progress u in [0, 1]."""
-    e = ease_out(u)
+    e = 0.4 * ease_out(u) + 0.6 * ease_in_out(u)   # gentle, floaty glide
     pos = (1 - e) ** 2 * P0 + 2 * (1 - e) * e * P1 + e ** 2 * P2
     hop = 1 + 0.25 * math.sin(min(u / 0.25, 1) * math.pi)   # pops toward camera first
     scale = hop * (1 - 0.95 * ease_in_out(u))
@@ -230,7 +230,7 @@ DUST = [(rng.uniform(-30, 30), rng.uniform(-60, 60), rng.uniform(0.7, 1.3)) for 
 
 
 def dust(canvas, img, sf, f):
-    t = (f - LAUNCH) / 48
+    t = (f - LAUNCH) / 80
     if not 0 <= t <= 1:
         return
     layer = canvas.copy()
@@ -287,7 +287,7 @@ def twinkle(canvas, f):
 def camera(f):
     """Zoom factor and centre: push in on the barge, pull out for the flight."""
     zin = ease_in_out((f - 264) / 54)
-    zout = ease_in_out((f - IMPACT - 4) / 50)
+    zout = ease_in_out((f - IMPACT - 6) / 80)
     k = zin * (1 - zout)
     z = 1 + 0.5 * k
     c = np.array([SW / 2, SH / 2]) * (1 - k) + np.array([1000.0, 372.0]) * k
