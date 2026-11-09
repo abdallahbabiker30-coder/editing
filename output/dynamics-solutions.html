@@ -92,4 +92,68 @@ table{page-break-inside:avoid;border-collapse:collapse;margin:6px 0 8px;width:10
 <li><b>Applications:</b> collisions and impact, explosions, gun and bullet recoil, a person jumping off a boat, and coupling of railway cars.</li>
 <li>Note: momentum is conserved in a collision, but <b>kinetic energy usually is not</b>, because some of it is lost as heat, sound and deformation.</li>
 </ul>
+
+<div class="qh pb"><b>Question 4</b><span>20 points</span></div>
+<div class="tt">RADIAL &amp; TRANSVERSE (POLAR) COMPONENTS</div>
+<div class="g"><b>Given:</b> m = 300 g = 0.3 kg, &nbsp; r = 300 + 100 cos(0.5πt) [mm], &nbsp; θ = π(t² − 3t) [rad], &nbsp; t = 0.5 s, horizontal plane<br>
+<b>Find:</b> the transverse component of the force on the collar, F<sub>θ</sub></div>
+<div class="fig"><svg viewBox="0 0 380 170" width="50%" font-family="Times New Roman" font-size="15">
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker><marker id="pr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>
+<circle cx="40" cy="140" r="6" fill="#fff" stroke="#111" stroke-width="2"/><text x="20" y="160">O</text>
+<path d="M40,140L330,30" stroke="#555" stroke-width="7" stroke-linecap="round"/>
+<rect x="-20" y="-11" width="40" height="22" transform="translate(205,77) rotate(-20.8)" fill="#cfd8e6" stroke="#111" stroke-width="1.8"/><text x="196" y="62">B</text>
+<path d="M40,140H140" stroke="#999" stroke-dasharray="4,3"/><path d="M100,140A60,60 0 0 0 96,119" fill="none" stroke="#111"/><text x="104" y="132">θ</text>
+<path d="M205,77L275,50.4" stroke="#1d5fa8" stroke-width="2.4" marker-end="url(#p)"/><text x="268" y="44" fill="#1d5fa8">e<tspan font-size="10" dy="3">r</tspan></text>
+<path d="M205,77L231.6,147" stroke="#c0392b" stroke-width="2.4" marker-end="url(#pr)"/><text x="236" y="150" fill="#c0392b">F<tspan font-size="10" dy="3">θ</tspan><tspan dy="-3"> (along e</tspan><tspan font-size="10" dy="3">θ</tspan><tspan dy="-3">)</tspan></text>
+<text x="105" y="95">r</text>
+</svg></div>
+<h4>Step 1 – Derivatives (convert r to metres)</h4>
+<div class="m">r = 0.3 + 0.1 cos(0.5πt) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; θ = π(t² − 3t)<br>
+ṙ = −0.05π sin(0.5πt) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; θ̇ = π(2t − 3)<br>
+r̈ = −0.025π² cos(0.5πt) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; θ̈ = 2π</div>
+<h4>Step 2 – Values at t = 0.5 s &nbsp;(0.5πt = π/4, sin = cos = 0.7071)</h4>
+<table style="width:auto"><tr><th>r</th><th>ṙ</th><th>r̈</th><th>θ̇</th><th>θ̈</th></tr>
+<tr><td>0.3707 m</td><td>−0.1111 m/s</td><td>−0.1745 m/s²</td><td>−2π = −6.283 rad/s</td><td>2π = 6.283 rad/s²</td></tr></table>
+<h4>Step 3 – Transverse acceleration</h4>
+<div class="m">a<sub>θ</sub> = r θ̈ + 2 ṙ θ̇ = (0.3707)(6.283) + 2(−0.1111)(−6.283)<br>
+a<sub>θ</sub> = 2.329 + 1.396 = 3.725 m/s²</div>
+<h4>Step 4 – Newton's 2nd law in the θ direction</h4>
+<div class="m">F<sub>θ</sub> = m·a<sub>θ</sub> = (0.3)(3.725)</div>
+<div class="box">F<sub>θ</sub> = 1.118 N</div>
+<p style="font-size:10.5pt">(For reference, the radial part is a<sub>r</sub> = r̈ − rθ̇² = −0.1745 − 0.3707(6.283)² = −14.81 m/s², so F<sub>r</sub> = −4.44 N. This was not asked.)</p>
+
+<div class="qh pb"><b>Question 5</b><span>20 points</span></div>
+<div class="tt">UNIFORM CIRCULAR MOTION – CONICAL PENDULUM</div>
+<div class="g"><b>Given:</b> m = 7.5 kg, constant speed v = 2.5 m/s in a horizontal circle, θ = 60° (angle between wire BC and the horizontal), g = 9.81 m/s²<br>
+<b>Find:</b> (a) the tension T in wire BC, (b) the radius of the circle ρ</div>
+<div class="fig"><svg viewBox="0 0 400 200" width="52%" font-family="Times New Roman" font-size="15">
+<defs><marker id="q5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker><marker id="q5r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>
+<text x="5" y="16" font-family="Arial" font-size="12" font-weight="bold">Free-body diagram of the hammer head</text>
+<circle cx="110" cy="120" r="14" fill="#555"/>
+<path d="M110,120L197,-30" stroke="#c0392b" stroke-width="0" />
+<path d="M110,120L170,16" stroke="#c0392b" stroke-width="2.6" marker-end="url(#q5r)"/><text x="176" y="40" fill="#c0392b">T (along wire BC)</text>
+<path d="M110,120V190" stroke="#111" stroke-width="2.4" marker-end="url(#q5)"/><text x="116" y="192">W = mg</text>
+<path d="M110,120H200" stroke="#999" stroke-dasharray="4,3"/><path d="M150,120A40,40 0 0 0 130,85.4" fill="none" stroke="#111"/><text x="152" y="104">θ = 60°</text>
+<path d="M240,120H330" stroke="#1d5fa8" stroke-width="2.4" marker-end="url(#q5)"/><text x="236" y="112" fill="#1d5fa8" font-size="13">n: toward the center</text><text x="236" y="142" fill="#1d5fa8" font-size="13">a<tspan font-size="10" dy="3">n</tspan><tspan dy="-3"> = v²/ρ,  a</tspan><tspan font-size="10" dy="3">t</tspan><tspan dy="-3"> = 0</tspan></text>
+</svg></div>
+<h4>(a) Tension in wire BC</h4>
+<p>The motion is in a horizontal plane, so there is no vertical acceleration:</p>
+<div class="m">ΣF<sub>y</sub> = 0: &nbsp; T sin θ − mg = 0 &nbsp;⇒&nbsp; T = mg / sin 60° = (7.5)(9.81) / 0.8660</div>
+<div class="box">T = 84.96 N ≈ 85.0 N</div>
+<h4>(b) Radius of the circle</h4>
+<p>The horizontal component of the tension gives the normal (centripetal) acceleration:</p>
+<div class="m">ΣF<sub>n</sub> = m a<sub>n</sub>: &nbsp; T cos θ = m v²/ρ<br>
+ρ = m v² / (T cos θ) = (7.5)(2.5)² / [(84.96)(0.5)] = 46.875 / 42.48</div>
+<div class="box">ρ = 1.104 m</div>
+<p style="font-size:10.5pt">Check: dividing the two equations gives tan θ = gρ/v², so ρ = v²·tan θ / g = (6.25)(1.732)/9.81 = 1.104 m ✓</p>
+
+<div class="qh pb"><b>Question 6</b><span>6 points</span></div>
+<div class="tt">UNIT CONVERSIONS</div>
+<p><b>Acceleration:</b> 1 mm = 10⁻³ m; &nbsp; 1 m = 10⁻³ km; &nbsp; 1 s = 1/3600 h, so 1/s² = 3600²/h² = 1.296×10⁷ /h²</p>
+<div class="m">a = 5 mm/s² = 5×10⁻³ m/s² = 0.005 m/s²<br>
+a = 0.005 m/s² × (1 km / 1000 m) × (3600 s / 1 h)² = 0.005 × 10⁻³ × 12 960 000</div>
+<div class="box">a = 5 mm/s² = 0.005 m/s² = 64.8 km/h²</div>
+<p><b>Force:</b> 1 N = 1 kg·m/s², &nbsp; 1 kN = 1000 N</p>
+<div class="m">F = 5 kN = 5 × 1000 N = 5000 N</div>
+<div class="box">F = 5 kN = 5000 kg·m/s²</div>
 </body></html>
