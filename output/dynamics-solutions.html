@@ -1,0 +1,95 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Dynamics Revision Solutions</title>
+<style>
+body{font-family:Arial,sans-serif;font-size:11.5pt;line-height:1.45;margin:16px 30px;color:#111}
+.qh{display:flex;justify-content:space-between;align-items:center;border-bottom:2.5px solid #111;margin:0 0 8px;padding-bottom:4px}
+.qh b{background:#1d2a3a;color:#fff;padding:4px 14px;border-radius:5px;font-size:13pt}.qh span{font-weight:bold;font-size:12.5pt}
+.tt{text-align:center;font-weight:bold;font-size:12.5pt;margin:4px 0 10px}
+h4{page-break-after:avoid;margin:12px 0 4px;font-size:12pt;border-left:4px solid #1d2a3a;padding-left:8px}
+.g{background:#f3f5f9;border:1px solid #ccd;padding:6px 12px;margin:6px 0;font-size:11pt}
+.m{font-family:"Cambria Math","Times New Roman",serif;font-size:12.5pt;line-height:1.8;margin:4px 0 4px 14px}
+.box{display:inline-block;border:2px solid #111;padding:2px 10px;margin:4px 0 6px 14px;font-weight:bold;background:#fff8d6;font-family:"Cambria Math","Times New Roman",serif;font-size:12.5pt}
+.fig{text-align:center;margin:4px 0;page-break-inside:avoid}
+.pb{page-break-before:always} p{margin:4px 0 6px} ul,ol{margin:3px 0 6px 22px;padding:0} li{margin:2px 0}
+table{page-break-inside:avoid;border-collapse:collapse;margin:6px 0 8px;width:100%;font-size:11pt}td,th{border:1px solid #555;padding:4px 9px;text-align:left;vertical-align:top}th{background:#e8ecf3}
+</style></head><body>
+
+<div class="qh"><b>Question 1</b><span>15 points</span></div>
+<div class="tt">CURVILINEAR MOTION – NORMAL &amp; TANGENTIAL COMPONENTS</div>
+<div class="g"><b>Given:</b> v = 400 m/s, a = 50 m/s², with a at 70° from the direction of motion (the tangent t), pointing toward the center of curvature.<br>
+<b>Find:</b> the rate of increase in speed, v̇ = a<sub>t</sub> (5 p), and the radius of curvature ρ (10 p).</div>
+<div class="fig"><svg viewBox="0 0 360 230" width="48%" font-family="Times New Roman" font-size="15">
+<defs><marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker><marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1d5fa8"/></marker></defs>
+<path d="M20,90Q120,30 330,60" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="120" cy="50" r="5" fill="#111"/>
+<path d="M120,50H300" stroke="#111" stroke-width="2" marker-end="url(#k)"/><text x="268" y="42">t, v = 400 m/s</text>
+<path d="M120,50V215" stroke="#999" stroke-dasharray="4,3"/><text x="126" y="220">n (toward center)</text>
+<path d="M120,50L171.3,191" stroke="#c0392b" stroke-width="2.5" marker-end="url(#r)"/><text x="176" y="190" fill="#c0392b">a = 50 m/s²</text>
+<path d="M120,50H171" stroke="#1d5fa8" stroke-width="3" marker-end="url(#b)"/><text x="132" y="74" fill="#1d5fa8" font-size="13">a<tspan font-size="10" dy="3">t</tspan></text>
+<path d="M120,50V190" stroke="#1d5fa8" stroke-width="2" marker-end="url(#b)" opacity=".7"/><text x="92" y="150" fill="#1d5fa8" font-size="13">a<tspan font-size="10" dy="3">n</tspan></text>
+<path d="M150,50A30,30 0 0 1 130.3,78.2" fill="none" stroke="#111"/><text x="152" y="88" font-size="13">70°</text>
+</svg></div>
+
+<h4>Rate of increase in speed (tangential component) – 5 p</h4>
+<p>The rate of change of speed is the tangential component of the acceleration:</p>
+<div class="m">v̇ = a<sub>t</sub> = a·cos 70° = 50·cos 70° = 50(0.3420)</div>
+<div class="box">v̇ = a<sub>t</sub> = 17.1 m/s²</div>
+
+<h4>Radius of curvature (normal component) – 10 p</h4>
+<div class="m">a<sub>n</sub> = a·sin 70° = 50(0.9397) = 46.98 m/s²</div>
+<p>Then use a<sub>n</sub> = v²/ρ:</p>
+<div class="m">ρ = v² / a<sub>n</sub> = (400)² / 46.98 = 160 000 / 46.98</div>
+<div class="box">ρ = 3405 m ≈ 3.41 km</div>
+<p style="font-size:10.5pt">Check: √(a<sub>t</sub>² + a<sub>n</sub>²) = √(17.10² + 46.98²) = 50.0 m/s² ✓</p>
+
+<div class="qh pb"><b>Question 2</b><span>20 points</span></div>
+<div class="tt">EQUATION OF MOTION – NORMAL &amp; TANGENTIAL COORDINATES</div>
+<div class="g"><b>Given:</b> m = 1 kg, constant speed v = 4 m/s, μ<sub>s</sub> = 0.6, g = 9.81 m/s²<br><b>Find:</b> the smallest radius of curvature ρ<sub>min</sub> so that the cartons do not slip.</div>
+<div class="fig"><svg viewBox="0 0 480 205" width="64%" font-family="Times New Roman" font-size="15">
+<defs><marker id="k2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker><marker id="r2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>
+<text x="10" y="18" font-family="Arial" font-size="12" font-weight="bold">Free-body diagram (side view)</text>
+<rect x="110" y="70" width="70" height="55" fill="#e9eef5" stroke="#111" stroke-width="2"/>
+<path d="M60,125H260" stroke="#111" stroke-width="2"/>
+<path d="M145,97V175" stroke="#111" stroke-width="2" marker-end="url(#k2)"/><text x="150" y="180">W = mg</text>
+<path d="M145,200V128" stroke="#111" stroke-width="2" marker-end="url(#k2)" transform="translate(-20,0)"/><text x="88" y="195">N</text>
+<path d="M150,125H40" stroke="#c0392b" stroke-width="2.5" marker-end="url(#r2)"/><text x="40" y="117" fill="#c0392b">F<tspan font-size="11" dy="3">f</tspan></text>
+<path d="M30,60H90" stroke="#111" marker-end="url(#k2)"/><text x="30" y="52" font-size="13">n (toward the center)</text>
+<text x="270" y="80" font-size="13.5">Friction is the only horizontal</text><text x="270" y="98" font-size="13.5">force, so it must supply the</text><text x="270" y="116" font-size="13.5">centripetal force m·v²/ρ.</text>
+<text x="270" y="140" font-size="13.5">Speed is constant ⇒ a<tspan font-size="10" dy="3">t</tspan><tspan dy="-3"> = 0</tspan></text>
+</svg></div>
+
+<h4>Equations of motion</h4>
+<div class="m">ΣF<sub>b</sub> = 0: &nbsp; N − mg = 0 &nbsp;⇒&nbsp; N = mg = (1)(9.81) = 9.81 N<br>
+ΣF<sub>t</sub> = m·a<sub>t</sub> = 0 &nbsp; (constant speed)<br>
+ΣF<sub>n</sub> = m·a<sub>n</sub>: &nbsp; F<sub>f</sub> = m·v²/ρ</div>
+<h4>Condition for no slipping</h4>
+<p>The smallest radius is reached when friction is at its maximum (the carton is about to slip):</p>
+<div class="m">F<sub>f</sub> = μ<sub>s</sub>N = (0.6)(9.81) = 5.886 N<br>
+μ<sub>s</sub>·m·g = m·v²/ρ<sub>min</sub> &nbsp;⇒&nbsp; ρ<sub>min</sub> = v² / (μ<sub>s</sub>g) = (4)² / [(0.6)(9.81)] = 16 / 5.886</div>
+<div class="box">ρ<sub>min</sub> = 2.72 m</div>
+<p style="font-size:10.5pt">The mass cancels out, so the answer does not depend on the carton's mass. If ρ &lt; 2.72 m, the friction needed would be more than μ<sub>s</sub>N and the carton would slip outward.</p>
+
+<div class="qh pb"><b>Question 3</b><span>14 points</span></div>
+<div class="tt">THEORY</div>
+
+<h4>a) Difference between kinematics and kinetics (7 p)</h4>
+<table>
+<tr><th style="width:20%"></th><th>Kinematics</th><th>Kinetics</th></tr>
+<tr><td><b>Definition</b></td><td>Studies the <b>geometry of motion</b>: how a body moves, <b>without considering the forces</b> that cause the motion.</td><td>Studies the <b>relation between the forces</b> acting on a body and the <b>motion they produce</b>.</td></tr>
+<tr><td><b>Quantities</b></td><td>Position, displacement, velocity, acceleration and time.</td><td>Force, mass, moment, momentum, work and energy, together with acceleration.</td></tr>
+<tr><td><b>Main equations</b></td><td>v = ds/dt, a = dv/dt, a ds = v dv, a<sub>t</sub> = v̇, a<sub>n</sub> = v²/ρ</td><td>Newton's 2nd law ΣF = m·a, work–energy, impulse–momentum</td></tr>
+<tr><td><b>Example</b></td><td>Question 1: finding a<sub>t</sub> and ρ from v and a.</td><td>Question 2: using friction (a force) to find ρ<sub>min</sub>.</td></tr>
+</table>
+<p><b>In short:</b> kinematics answers <i>“how does it move?”</i> and kinetics answers <i>“why does it move that way?”</i> Kinetics uses the results of kinematics.</p>
+
+<h4>b) Conservation of linear momentum (7 p)</h4>
+<p>The <b>linear momentum</b> of a particle is <b>L = m·v</b> (a vector, units kg·m/s). The <b>principle of linear impulse and momentum</b> says:</p>
+<div class="m">m·v₁ + Σ∫ F dt = m·v₂</div>
+<p>If the <b>sum of the external impulses on a system of particles is zero</b>, then the total linear momentum of the system stays <b>constant</b>:</p>
+<div class="m">Σ m·v₁ = Σ m·v₂ &nbsp;&nbsp;&nbsp; (e.g. m<sub>A</sub>v<sub>A1</sub> + m<sub>B</sub>v<sub>B1</sub> = m<sub>A</sub>v<sub>A2</sub> + m<sub>B</sub>v<sub>B2</sub>)</div>
+<ul>
+<li><b>Condition:</b> there are no external impulsive forces on the system, or they are negligible. The <b>internal forces</b> between the particles always cancel in pairs (Newton's 3rd law: equal and opposite), so they do not change the total momentum.</li>
+<li>Momentum is a <b>vector</b>, so it can be conserved in one direction (e.g. x) even if it is not conserved in another.</li>
+<li><b>Applications:</b> collisions and impact, explosions, gun and bullet recoil, a person jumping off a boat, and coupling of railway cars.</li>
+<li>Note: momentum is conserved in a collision, but <b>kinetic energy usually is not</b>, because some of it is lost as heat, sound and deformation.</li>
+</ul>
+</body></html>
