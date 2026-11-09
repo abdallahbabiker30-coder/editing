@@ -1,0 +1,254 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Machine Design Midterm Solutions</title>
+<style>
+body{font-family:Arial,sans-serif;font-size:11.5pt;line-height:1.45;margin:16px 30px;color:#111}
+.qh{display:flex;justify-content:space-between;align-items:center;border-bottom:2.5px solid #111;margin:0 0 8px;padding-bottom:4px}
+.qh b{background:#1d2a3a;color:#fff;padding:4px 14px;border-radius:5px;font-size:13pt}.qh span{font-weight:bold;font-size:12.5pt}
+.tt{text-align:center;font-weight:bold;font-size:12.5pt;margin:4px 0 10px}
+h4{page-break-after:avoid;margin:12px 0 4px;font-size:12pt;border-left:4px solid #1d2a3a;padding-left:8px}
+.g{background:#f3f5f9;border:1px solid #ccd;padding:6px 12px;margin:6px 0;font-size:11pt}
+.m{font-family:"Cambria Math","Times New Roman",serif;font-size:12.5pt;line-height:1.75;margin:4px 0 4px 14px}
+.box{display:inline-block;border:2px solid #111;padding:2px 10px;margin:4px 0 6px 14px;font-weight:bold;background:#fff8d6;font-family:"Cambria Math","Times New Roman",serif;font-size:12.5pt}
+.note{font-size:10pt;color:#333;background:#fdecea;border-left:4px solid #c0392b;padding:5px 10px;margin:6px 0}
+table{page-break-inside:avoid;border-collapse:collapse;margin:6px 0 8px 14px;font-size:11pt}td,th{border:1px solid #555;padding:3px 9px;text-align:center}th{background:#e8ecf3}
+.pb{page-break-before:always}.fig{text-align:center;margin:4px 0;page-break-inside:avoid}
+p{margin:4px 0 6px} ol,ul{margin:3px 0 6px 22px;padding:0} li{margin:2px 0}
+.mat{display:inline-table;vertical-align:middle;border-left:2px solid #111;border-right:2px solid #111;padding:0 6px;margin:0 6px}
+.mat td{border:none;padding:1px 10px}
+</style></head><body>
+
+<!-- ================= Q1 ================= -->
+<div class="qh"><b>Question 1</b><span>20 points</span></div>
+<div class="tt">INTRODUCTION TO THE DESIGN PROCESS</div>
+
+<h4>(a) Sequential stages of the mechanical design process (6 pts)</h4>
+<div class="fig"><svg viewBox="0 0 640 112" width="88%" font-family="Arial" font-size="14">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker></defs>
+<g fill="#eef2f8" stroke="#111" stroke-width="1.5"><rect x="5" y="15" width="100" height="40" rx="6"/><rect x="160" y="15" width="100" height="40" rx="6"/><rect x="315" y="15" width="120" height="40" rx="6"/><rect x="490" y="15" width="145" height="40" rx="6"/></g>
+<g text-anchor="middle" font-weight="bold"><text x="55" y="40">Need</text><text x="210" y="40">Design</text><text x="375" y="40">Manufacture</text><text x="562" y="33">Performance</text><text x="562" y="49">assessment</text></g>
+<g stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#ar)"><path d="M105,35H158"/><path d="M260,35H313"/><path d="M435,35H488"/>
+<path d="M562,55V82H375V57" stroke-dasharray="5,3"/><path d="M562,82V98H210V57" stroke-dasharray="5,3"/></g>
+<text x="440" y="76" font-size="11.5" font-style="italic">problem found → go back (iteration)</text></svg></div>
+<ol>
+<li><b>Identification of a need:</b> design always starts from a need, e.g. a problem to solve or a product to improve. It is turned into a clear problem statement with the required functions, loads, constraints, cost and so on.</li>
+<li><b>Design:</b> the engineer generates concepts, chooses materials and geometry, and does the <b>analysis</b> (stress, deflection, failure theories, factor of safety). The design is then evaluated and optimized, and the result is drawings and specifications.</li>
+<li><b>Manufacture:</b> the part is produced from the design, using the chosen processes, tolerances and assembly.</li>
+<li><b>Performance assessment:</b> the manufactured part is tested and checked in service to see whether it meets the original need (strength, life, function, safety).</li>
+</ol>
+
+<h4>(b) Why the design process is iterative (6 pts)</h4>
+<p>The process is <b>iterative</b> because the first design is rarely the best one. Information that is only available later, such as manufacturing difficulties, test results or service behaviour, often shows weaknesses that could not be fully predicted at the start. Each stage feeds back into the earlier ones, and the cycle repeats until the product meets the need.</p>
+<p><b>If a problem is identified:</b></p>
+<ul>
+<li><b>During manufacturing:</b> go back to the <b>design</b> stage and modify the design (geometry, tolerances, material, process) so that it can be manufactured.</li>
+<li><b>During performance assessment:</b> find the cause, then go back to <b>manufacture</b> (if the fault is in production quality) or to <b>design</b> (if the design itself is inadequate). Re-analyse, correct it and assess again.</li>
+</ul>
+
+<h4>(c) Five mechanical failure modes (8 pts)</h4>
+<table style="margin-left:0;width:100%">
+<tr><th style="width:24%">Failure mode</th><th>Physical meaning</th></tr>
+<tr><td><b>1. Yielding</b></td><td style="text-align:left">The stress goes above the yield strength S<sub>y</sub>, so the part deforms <b>permanently (plastically)</b> and no longer keeps its shape or function. This is the main failure mode for ductile materials under static load.</td></tr>
+<tr><td><b>2. Fracture</b></td><td style="text-align:left">The part <b>breaks into pieces</b> when the stress reaches the ultimate strength. It is typical of brittle materials, which fail suddenly with little deformation.</td></tr>
+<tr><td><b>3. Buckling</b></td><td style="text-align:left">A slender member under <b>compression</b> suddenly <b>bends sideways</b> (loses stability) at a critical load, even though the stress may still be below S<sub>y</sub>.</td></tr>
+<tr><td><b>4. Creep</b></td><td style="text-align:left">Slow, <b>time-dependent permanent deformation</b> under a constant load, mainly at <b>high temperature</b>. It can end in rupture.</td></tr>
+<tr><td><b>5. Fatigue</b></td><td style="text-align:left">Failure under <b>repeated or fluctuating (dynamic) loads</b>. A crack starts and grows over many cycles at stresses <b>below</b> the static strength.</td></tr>
+<tr><td><b>(extra) Chemical failure – corrosion / wear</b></td><td style="text-align:left">Material is lost from the surface by chemical attack (corrosion) or by rubbing contact (wear). This reduces the section and the strength over time.</td></tr>
+</table>
+
+<!-- ================= Q2 ================= -->
+<div class="qh pb"><b>Question 2</b><span>20 points</span></div>
+<div class="tt">LOADED CANTILEVER CYLINDER</div>
+<div class="g"><b>Given:</b> L = 250 mm, d = 50 mm → c = d/2 = 0.025 m, A = 1.96×10⁻³ m², I = 3.06×10⁻⁷ m⁴, J = 6.12×10⁻⁷ m⁴<br>
+Axial <b>compressive</b> load F = 1 kN, transverse load V = 3 kN, torque T = 1 kN·m<br>
+<b>Critical section:</b> the fixed end (wall), where the bending moment is largest. Point <b>A</b> is the top fiber; point <b>B</b> is the side, on the neutral axis.</div>
+<div class="fig"><svg viewBox="0 0 470 150" width="62%" font-family="Arial" font-size="13">
+<defs><marker id="b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>
+<circle cx="80" cy="75" r="55" fill="#f4f6fa" stroke="#111" stroke-width="2"/>
+<path d="M10,75H150M80,5V145" stroke="#999" stroke-dasharray="4,3"/>
+<circle cx="80" cy="20" r="5" fill="#1d2a3a"/><text x="88" y="14" font-weight="bold">A</text>
+<circle cx="25" cy="75" r="5" fill="#1d2a3a"/><text x="4" y="66" font-weight="bold">B</text>
+<text x="152" y="79" font-size="11">neutral axis (z)</text><text x="84" y="148" font-size="11">y</text>
+<g font-size="12.5"><text x="215" y="30"><tspan font-weight="bold">A (top):</tspan> σ<tspan font-size="9" dy="3">bending</tspan><tspan dy="-3"> = max,  τ</tspan><tspan font-size="9" dy="3">V</tspan><tspan dy="-3"> = 0</tspan></text>
+<text x="215" y="52">τ<tspan font-size="9" dy="3">T</tspan><tspan dy="-3"> = max (outer surface)</tspan></text>
+<text x="215" y="92"><tspan font-weight="bold">B (side):</tspan> σ<tspan font-size="9" dy="3">bending</tspan><tspan dy="-3"> = 0,  τ</tspan><tspan font-size="9" dy="3">V</tspan><tspan dy="-3"> = max</tspan></text>
+<text x="215" y="114">τ<tspan font-size="9" dy="3">T</tspan><tspan dy="-3"> = max (outer surface)</tspan></text></g>
+</svg></div>
+
+<h4>(a) Axial normal stress and maximum bending stress</h4>
+<p><b>Axial stress</b> (compressive, uniform over the section, same at A and B):</p>
+<div class="m">σ<sub>axial</sub> = −F/A = −(1000 N)/(1.96×10⁻³ m²) = −5.10×10⁵ Pa</div>
+<div class="box">σ<sub>axial</sub> = −0.51 MPa (compression)</div>
+<p><b>Maximum bending moment</b> at the fixed end:</p>
+<div class="m">M<sub>max</sub> = V·L = (3000 N)(0.25 m) = 750 N·m</div>
+<p><b>Maximum bending stress</b> at the top fiber (point A). The load acts downward, so the top fiber is in tension:</p>
+<div class="m">σ<sub>b</sub> = M·c / I = (750)(0.025) / (3.06×10⁻⁷) = 6.13×10⁷ Pa</div>
+<div class="box">σ<sub>b,max</sub> = 61.27 MPa (tension at A); σ<sub>b</sub> = 0 at B (neutral axis)</div>
+
+<h4>(b) Transverse and torsional shear stresses at A and B</h4>
+<p><b>Transverse shear</b> (it is zero at the top surface and largest at the neutral axis):</p>
+<div class="m">τ<sub>V,A</sub> = 0 &nbsp; (free top surface)<br>
+τ<sub>V,B</sub> = 4V / 3A = 4(3000) / [3(1.96×10⁻³)] = 2.04×10⁶ Pa</div>
+<div class="box">τ<sub>V,A</sub> = 0 &nbsp;&nbsp; τ<sub>V,B</sub> = 2.04 MPa</div>
+<p><b>Torsional shear</b> (largest on the outer surface, so the same at A and B):</p>
+<div class="m">τ<sub>T</sub> = T·c / J = (1000 N·m)(0.025 m) / (6.12×10⁻⁷ m⁴) = 4.085×10⁷ Pa</div>
+<div class="box">τ<sub>T,A</sub> = τ<sub>T,B</sub> = 40.85 MPa</div>
+
+<h4>(c) Combined normal and shear stresses at A and B</h4>
+<table>
+<tr><th>Point</th><th>Normal stress σ<sub>x</sub> = σ<sub>axial</sub> + σ<sub>b</sub></th><th>Shear stress τ = τ<sub>V</sub> + τ<sub>T</sub></th></tr>
+<tr><td><b>A</b></td><td>−0.51 + 61.27 = <b>60.76 MPa</b></td><td>0 + 40.85 = <b>40.85 MPa</b></td></tr>
+<tr><td><b>B</b></td><td>−0.51 + 0 = <b>−0.51 MPa</b></td><td>2.04 + 40.85 = <b>42.89 MPa</b></td></tr>
+</table>
+<div class="box">A: σ<sub>x</sub> = 60.76 MPa, τ = 40.85 MPa &nbsp;&nbsp;|&nbsp;&nbsp; B: σ<sub>x</sub> = −0.51 MPa, τ = 42.89 MPa</div>
+<p style="font-size:10.5pt">At B the transverse and torsional shear stresses act along the same line (the y direction), so they add, as in the course notes.</p>
+<div class="note"><b>Note:</b> the lecture notes show τ<sub>T</sub> ≈ 0.04 MPa (so 2.08 MPa at B). That comes from using T = 1 N·m. With T = 1 kN·m = 1000 N·m, as given, the correct value is <b>40.85 MPa</b>. With the exact A and I instead of the rounded given values, you get −0.509 MPa and 61.1 MPa; both versions are accepted.</div>
+
+<!-- ================= Q3 ================= -->
+<div class="qh pb"><b>Question 3</b><span>20 points</span></div>
+<div class="tt">THREE-DIMENSIONAL STRESS STATE</div>
+<div class="g"><b>Given:</b> σ<sub>x</sub> = 20 MPa, σ<sub>y</sub> = −10 MPa, σ<sub>z</sub> = 15 MPa, τ<sub>xy</sub> = 5 MPa; τ<sub>yz</sub> = τ<sub>xz</sub> = 0</div>
+
+<h4>(a) Full 3-D stress tensor</h4>
+<div class="m">[σ] = <table class="mat"><tr><td>σ<sub>x</sub></td><td>τ<sub>xy</sub></td><td>τ<sub>xz</sub></td></tr><tr><td>τ<sub>xy</sub></td><td>σ<sub>y</sub></td><td>τ<sub>yz</sub></td></tr><tr><td>τ<sub>xz</sub></td><td>τ<sub>yz</sub></td><td>σ<sub>z</sub></td></tr></table>
+= <table class="mat"><tr><td>20</td><td>5</td><td>0</td></tr><tr><td>5</td><td>−10</td><td>0</td></tr><tr><td>0</td><td>0</td><td>15</td></tr></table> MPa</div>
+
+<h4>(b) Characteristic equation and principal stresses</h4>
+<div class="m">det([σ] − σ[I]) = <table class="mat"><tr><td>20−σ</td><td>5</td><td>0</td></tr><tr><td>5</td><td>−10−σ</td><td>0</td></tr><tr><td>0</td><td>0</td><td>15−σ</td></tr></table> = 0</div>
+<p>Expanding along the third row:</p>
+<div class="m">(15−σ)·[(20−σ)(−10−σ) − 5²] = 0<br>
+(15−σ)·(σ² − 10σ − 225) = 0</div>
+<p>As a cubic (σ³ − I₁σ² + I₂σ − I₃ = 0):</p>
+<div class="m">I₁ = 20 − 10 + 15 = 25 &nbsp;&nbsp; I₂ = (20)(−10) + (−10)(15) + (15)(20) − 5² = −75 &nbsp;&nbsp; I₃ = det[σ] = −3375<br>
+<b>σ³ − 25σ² − 75σ + 3375 = 0</b></div>
+<p><b>Roots:</b> 15 − σ = 0 gives σ = 15. The quadratic gives σ = [10 ± √(100 + 900)]/2 = 5 ± √250 = 5 ± 15.81.</p>
+<div class="box">σ₁ = 20.81 MPa &nbsp;&nbsp; σ₂ = 15.00 MPa &nbsp;&nbsp; σ₃ = −10.81 MPa</div>
+<p style="font-size:10.5pt">Check: σ₁ + σ₂ + σ₃ = 25 = I₁ ✓ &nbsp;&nbsp; σ₁σ₂σ₃ = −3375 = I₃ ✓</p>
+
+<h4>(c) Absolute maximum shear stress</h4>
+<div class="m">τ<sub>max</sub> = (σ₁ − σ₃)/2 = (20.81 − (−10.81))/2</div>
+<div class="box">τ<sub>max</sub> = 15.81 MPa</div>
+
+<h4>(d) The three Mohr circles</h4>
+<table>
+<tr><th>Circle</th><th>Through</th><th>Center C = (σ<sub>i</sub>+σ<sub>j</sub>)/2</th><th>Radius R = |σ<sub>i</sub>−σ<sub>j</sub>|/2</th></tr>
+<tr><td>1 (largest)</td><td>σ₁, σ₃</td><td>(20.81 − 10.81)/2 = <b>5.00 MPa</b></td><td>(20.81 + 10.81)/2 = <b>15.81 MPa</b></td></tr>
+<tr><td>2</td><td>σ₁, σ₂</td><td>(20.81 + 15)/2 = <b>17.91 MPa</b></td><td>(20.81 − 15)/2 = <b>2.91 MPa</b></td></tr>
+<tr><td>3</td><td>σ₂, σ₃</td><td>(15 − 10.81)/2 = <b>2.09 MPa</b></td><td>(15 + 10.81)/2 = <b>12.91 MPa</b></td></tr>
+</table>
+<div class="fig"><svg viewBox="0 0 460 360" width="64%" font-family="Times New Roman" font-size="14">
+<!-- scale 10 px per MPa, origin x=150, y=180 -->
+<defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker></defs>
+<path d="M20,180H445" stroke="#111" stroke-width="1.3" marker-end="url(#m1)"/><path d="M150,350V12" stroke="#111" stroke-width="1.3" marker-end="url(#m1)"/>
+<circle cx="200" cy="180" r="158.1" fill="#eef3fa" stroke="#1d2a3a" stroke-width="2"/>
+<circle cx="170.9" cy="180" r="129.1" fill="#fff" stroke="#1d2a3a" stroke-width="1.7"/>
+<circle cx="329.1" cy="180" r="29.1" fill="#fff" stroke="#1d2a3a" stroke-width="1.7"/>
+<g fill="#c0392b"><circle cx="41.9" cy="180" r="4"/><circle cx="300" cy="180" r="4"/><circle cx="358.1" cy="180" r="4"/></g>
+<g fill="#111"><circle cx="200" cy="180" r="2.5"/><circle cx="170.9" cy="180" r="2.5"/><circle cx="329.1" cy="180" r="2.5"/></g>
+<path d="M200,180V21.9" stroke="#c0392b" stroke-dasharray="4,3"/><text x="205" y="45" fill="#c0392b" font-size="12.5">τ<tspan font-size="9" dy="3">max</tspan><tspan dy="-3"> = 15.81</tspan></text>
+<g font-size="12"><text x="16" y="198">σ₃=−10.81</text><text x="282" y="198">σ₂=15</text><text x="356" y="168">σ₁=20.81</text>
+<text x="190" y="215">C₁=5</text><text x="140" y="232">C₃=2.09</text><text x="312" y="226">C₂=17.91</text></g>
+<text x="438" y="172">σ</text><text x="156" y="22">τ</text><text x="153" y="194" font-size="11">0</text>
+</svg></div>
+<p style="text-align:center;font-size:10pt;font-style:italic">Drawn to scale (1 MPa = 10 units). The big circle (σ₁–σ₃) holds the two small ones, and its radius is τ<sub>max</sub>.</p>
+<div class="note">Solved with <b>τ<sub>xy</sub> = 5 MPa</b>, as written in the question. In the lecture example the 5 MPa was τ<sub>yz</sub>. That version gives σ₁ = 20, σ₂ = 15.96, σ₃ = −10.96 MPa and τ<sub>max</sub> = 15.48 MPa.</div>
+
+<!-- ================= Q4 ================= -->
+<div class="qh pb"><b>Question 4</b><span>20 points</span></div>
+<div class="tt">FAILURE CRITERIA AND FACTOR OF SAFETY</div>
+<div class="g"><b>Given:</b> σ<sub>x</sub> = 40 MPa, σ<sub>y</sub> = 30 MPa, τ<sub>xy</sub> = 20 MPa, τ<sub>yz</sub> = 10 MPa; σ<sub>z</sub> = τ<sub>xz</sub> = 0; S<sub>y</sub> = 100 MPa (ductile)</div>
+
+<h4>(a) Principal stresses</h4>
+<div class="m">[σ] = <table class="mat"><tr><td>40</td><td>20</td><td>0</td></tr><tr><td>20</td><td>30</td><td>10</td></tr><tr><td>0</td><td>10</td><td>0</td></tr></table> MPa
+&nbsp;&nbsp;⇒&nbsp;&nbsp; <table class="mat"><tr><td>40−σ</td><td>20</td><td>0</td></tr><tr><td>20</td><td>30−σ</td><td>10</td></tr><tr><td>0</td><td>10</td><td>−σ</td></tr></table> = 0</div>
+<div class="m">(40−σ)[(30−σ)(−σ) − 10²] − 20[20(−σ) − 10·0] = 0<br>
+(40−σ)(σ² − 30σ − 100) + 400σ = 0</div>
+<div class="m">I₁ = 40 + 30 + 0 = 70 &nbsp;&nbsp; I₂ = (40)(30) − 20² − 10² = 700 &nbsp;&nbsp; I₃ = det[σ] = −4000<br>
+<b>σ³ − 70σ² + 700σ + 4000 = 0</b></div>
+<p>Solving the cubic (calculator or trial and error):</p>
+<div class="box">σ₁ = 56.31 MPa &nbsp;&nbsp; σ₂ = 17.71 MPa &nbsp;&nbsp; σ₃ = −4.01 MPa</div>
+<p style="font-size:10.5pt">Check: sum = 70.0 = I₁ ✓ &nbsp;&nbsp; product = −4000 = I₃ ✓</p>
+
+<h4>(b) Maximum shear stress</h4>
+<div class="m">τ<sub>max</sub> = (σ₁ − σ₃)/2 = (56.31 + 4.01)/2</div>
+<div class="box">τ<sub>max</sub> = 30.16 MPa</div>
+
+<h4>(c) Factor of safety – Tresca (maximum shear stress)</h4>
+<div class="m">|σ₁−σ₂| = 38.60, &nbsp; |σ₂−σ₃| = 21.72, &nbsp; |σ₁−σ₃| = 60.32 MPa<br>
+n = S<sub>y</sub> / max|σ<sub>i</sub>−σ<sub>j</sub>| = S<sub>y</sub> / (σ₁−σ₃) = 100 / 60.32</div>
+<div class="box">n<sub>Tresca</sub> = 1.66</div>
+
+<h4>(d) Factor of safety – von Mises (distortion energy) and comparison</h4>
+<div class="m">σ' = √{ ½[(σ₁−σ₂)² + (σ₂−σ₃)² + (σ₃−σ₁)²] }<br>
+&nbsp;&nbsp;&nbsp;= √{ ½[38.60² + 21.72² + 60.32²] } = √{ ½[1490.0 + 471.7 + 3638.4] } = √2800 = 52.92 MPa<br>
+n = S<sub>y</sub> / σ' = 100 / 52.92</div>
+<div class="box">σ' = 52.92 MPa &nbsp;&nbsp; n<sub>von Mises</sub> = 1.89</div>
+<p style="font-size:10.5pt">Check from the components: σ' = √{½[(σ<sub>x</sub>−σ<sub>y</sub>)² + σ<sub>y</sub>² + σ<sub>x</sub>² + 6(τ<sub>xy</sub>² + τ<sub>yz</sub>²)]} = √{½[100 + 900 + 1600 + 3000]} = √2800 ✓</p>
+<p><b>Comparison:</b></p>
+<ul>
+<li>Both factors of safety are greater than 1, so the component is <b>safe (it does not yield)</b>.</li>
+<li>Tresca gives the <b>lower</b> factor of safety (1.66 &lt; 1.89), about 12 % lower, so <b>Tresca is more conservative</b>. Its hexagon lies inside the von Mises ellipse (Tresca assumes S<sub>sy</sub> = 0.5S<sub>y</sub>, von Mises gives S<sub>sy</sub> = 0.577S<sub>y</sub>).</li>
+<li>Von Mises agrees better with test results for ductile materials, so it is more accurate. Tresca is the safer and simpler choice.</li>
+</ul>
+
+<!-- ================= Q5 ================= -->
+<div class="qh pb"><b>Question 5</b><span>20 points</span></div>
+<div class="tt">SHAFT DESIGN UNDER COMBINED LOADING</div>
+<div class="g"><b>Given:</b> simply supported shaft, total length 200 + 600 + 200 = 1000 mm<br>
+F = 40 kN at x = 0.2 m and at x = 0.8 m (so a = 0.2 m, ℓ = 0.6 m); T = 40 kN·m at each load point, in opposite directions<br>
+S<sub>y</sub> = 400 MPa, n = 2, von Mises criterion, stress concentrations neglected</div>
+
+<h4>(a) Support reactions and bending-moment diagram</h4>
+<div class="m">ΣM<sub>A</sub> = 0: &nbsp; R<sub>B</sub>(1.0) − 40(0.2) − 40(0.8) = 0 &nbsp;⇒&nbsp; R<sub>B</sub> = 40 kN<br>
+ΣF<sub>y</sub> = 0: &nbsp; R<sub>A</sub> + R<sub>B</sub> − 40 − 40 = 0 &nbsp;⇒&nbsp; R<sub>A</sub> = 40 kN</div>
+<div class="box">R<sub>A</sub> = R<sub>B</sub> = 40 kN (upward, the loads are symmetric)</div>
+<p><b>Bending moment:</b></p>
+<div class="m">0 ≤ x ≤ 0.2: &nbsp; M = 40x &nbsp;→&nbsp; M(0.2) = 8 kN·m<br>
+0.2 ≤ x ≤ 0.8: &nbsp; M = 40x − 40(x − 0.2) = 8 kN·m (constant; the shear force V = 0)<br>
+0.8 ≤ x ≤ 1.0: &nbsp; M decreases linearly back to 0 at x = 1.0</div>
+<div class="fig"><svg viewBox="0 0 560 470" width="80%" font-family="Arial" font-size="12.5">
+<defs><marker id="q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z"/></marker><marker id="qr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c0392b"/></marker></defs>
+<!-- x: 0 m ->80, 1 m ->480 ; 0.2->160 0.8->400 -->
+<text x="5" y="58" font-weight="bold">Loading</text>
+<rect x="80" y="50" width="400" height="12" fill="#ddd" stroke="#111"/>
+<path d="M80,62l-10,16h20zM480,62l-10,16h20z" fill="#fff" stroke="#111"/>
+<g stroke="#c0392b" stroke-width="2.2" marker-end="url(#qr)"><path d="M160,12V47"/><path d="M400,12V47"/></g>
+<g stroke="#1d5fa8" stroke-width="2.2" marker-end="url(#q)"><path d="M80,100V82"/><path d="M480,100V82"/></g>
+<text x="166" y="22" fill="#c0392b">F = 40 kN, T = 40 kN·m</text><text x="292" y="22" fill="#c0392b">F = 40 kN, −T</text>
+<text x="40" y="100" fill="#1d5fa8">R<tspan font-size="9" dy="3">A</tspan><tspan dy="-3">=40</tspan></text><text x="488" y="100" fill="#1d5fa8">R<tspan font-size="9" dy="3">B</tspan><tspan dy="-3">=40 kN</tspan></text>
+<g font-size="11"><text x="108" y="118">0.2 m</text><text x="262" y="118">0.6 m</text><text x="428" y="118">0.2 m</text></g>
+<!-- SFD -->
+<text x="5" y="170" font-weight="bold">V (kN)</text>
+<path d="M80,170H490" stroke="#111"/>
+<path d="M80,170V140H160V170H400V200H480V170" fill="#eef3fa" stroke="#1d2a3a" stroke-width="2"/>
+<text x="105" y="135">+40</text><text x="425" y="216">−40</text><text x="265" y="163">0</text>
+<!-- BMD -->
+<text x="5" y="300" font-weight="bold">M (kN·m)</text>
+<path d="M80,300H490" stroke="#111"/>
+<path d="M80,300L160,240H400L480,300Z" fill="#eef3fa" stroke="#1d2a3a" stroke-width="2"/>
+<text x="230" y="234" font-weight="bold">M<tspan font-size="9" dy="3">max</tspan><tspan dy="-3"> = F·a = 8 kN·m</tspan></text>
+<!-- TMD -->
+<text x="5" y="420" font-weight="bold">T (kN·m)</text>
+<path d="M80,420H490" stroke="#111"/>
+<path d="M80,420H160V380H400V420H480" fill="#fdf0e6" stroke="#a04000" stroke-width="2"/>
+<text x="245" y="374" font-weight="bold" fill="#a04000">T<tspan font-size="9" dy="3">int</tspan><tspan dy="-3"> = 40 kN·m</tspan></text>
+<text x="100" y="440" font-size="11">0</text><text x="430" y="440" font-size="11">0</text>
+<text x="160" y="462" font-size="11" font-style="italic">Critical region: 0.2 m ≤ x ≤ 0.8 m (largest M and T together)</text>
+</svg></div>
+
+<h4>(b) Maximum bending moment and internal torque</h4>
+<div class="m">M<sub>max</sub> = R<sub>A</sub>·a = (40 kN)(0.2 m)</div>
+<div class="box">M<sub>max</sub> = 8 kN·m (constant between the two loads)</div>
+<p>The two torques are equal and act in opposite directions. One is put into the shaft at x = 0.2 m and taken out at x = 0.8 m, so the shaft section <b>between the loads</b> carries the full torque. The end parts carry no torque.</p>
+<div class="box">T<sub>internal</sub> = 40 kN·m (for 0.2 m ≤ x ≤ 0.8 m)</div>
+
+<h4>(c) Minimum shaft diameter – von Mises</h4>
+<p>The critical section is in the middle region, where M = 8 kN·m and T = 40 kN·m act together and V = 0. The critical points are the top and bottom fibers.</p>
+<div class="m">σ = 32M / πd³ &nbsp;&nbsp;&nbsp; τ = 16T / πd³<br>
+σ' = √(σ² + 3τ²) = (16 / πd³)·√(4M² + 3T²) = S<sub>y</sub> / n</div>
+<div class="m">√(4M² + 3T²) = √(4(8000)² + 3(40000)²) = √(2.56×10⁸ + 4.80×10⁹) = √(5.056×10⁹) = 71 106 N·m<br>
+S<sub>y</sub> / n = 400 / 2 = 200 MPa</div>
+<div class="m">d³ = 16·n·√(4M² + 3T²) / (π·S<sub>y</sub>) = 16(2)(71 106) / (π · 400×10⁶) = 1.8107×10⁻³ m³<br>
+d = (1.8107×10⁻³)<sup>1/3</sup> = 0.1219 m</div>
+<div class="box">d<sub>min</sub> = 121.9 mm ≈ 122 mm</div>
+<p style="font-size:10.5pt"><b>Check</b> with d = 0.1219 m: σ = 45.0 MPa, τ = 112.5 MPa, so σ' = √(45.0² + 3·112.5²) = 200 MPa = S<sub>y</sub>/n ✓. In practice choose the next standard size, e.g. <b>d = 125 mm</b>, which gives n = 2.16.</p>
+
+</body></html>
