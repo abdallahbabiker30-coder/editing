@@ -111,6 +111,19 @@ Four kinds of offer, in order:
 
 Build one stage at a time: get the attraction offer working, then add an upsell, then a downsell, then continuity. Do not launch all four at once.
 
+## Part 4: Courses, videos, and *$100M Lost Chapters*
+
+Read `courses-and-videos.md` in this skill's folder when the question is about any of these, or when the user asks where to learn more:
+
+- **Sales calls and objections** - the CLOSER call structure, the AAA objection method, the onion of blame
+- **Customer value** - six ways to raise lifetime gross profit
+- **Retention and churn** - churn maths, the first 90 days, onboarding, exit feedback
+- **Acquisition maths** - CAC, LTGP, payback period, levels of customer-financed acquisition
+- **What to work on next** - the Scaling Roadmap stages
+- **His free courses** - which one to take for which problem, and where to find them
+
+That file marks which items are well established and which need checking against the original.
+
 ## Diagnosis cheat sheet
 
 | Symptom | Likely fix |
@@ -123,6 +136,9 @@ Build one stage at a time: get the attraction offer working, then add an upsell,
 | Growing but always short on cash | Aim for client-financed acquisition |
 | Trying five channels, none working | Cut to one. More, then better, then new |
 | Competing on price | Change the offer so it can't be compared like-for-like |
+| Calls happen but don't close | CLOSER structure and AAA for objections (see `courses-and-videos.md`) |
+| Customers leave after a month or two | Fix onboarding and the first 90 days before buying more leads |
+| Unsure what to focus on | Find their stage on the Scaling Roadmap and fix that one constraint |
 
 ## Rules
 
